@@ -14,12 +14,12 @@ pipeline {
         }
         stage('Terraform Plan') {
             steps {
-                bat 'terraform plan'
+                bat 'terraform plan -target="aws_s3_bucket"."my_bucket" -target="aws_iam_role"."new_role" -out=tfplan'
             }
         }
         stage('Terraform Apply') {
             steps {
-                bat 'terraform apply -auto-approve'
+                bat 'terraform apply -auto-approve tfplan'
             }
         }
     }
